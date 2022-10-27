@@ -11,7 +11,7 @@ public class PlayerMover : MonoBehaviour
     private PlayerInput _playerInput;
     private Animator _animatorController;
     private float _moveTime = 0f, _moveCooldown = 0.2f;
-    private DirectionState _directionState;
+    private DirectionState _directionState = DirectionState.Down;
     private DirectionState _horizontalDirectionState = DirectionState.Left;
     enum DirectionState
     {
@@ -19,6 +19,45 @@ public class PlayerMover : MonoBehaviour
         Left,
         Down,
         Up
+    }
+    private void Awake()
+    {
+        _playerInput = new PlayerInput();
+        _animatorController = GetComponent<Animator>();
+    }
+
+    private void OnEnable()
+    {
+        _playerInput.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _playerInput.Disable();
+    }
+
+    private void Update()
+    {
+        Vector2 moveDirection = _playerInput.Player.Move.ReadValue<Vector2>();
+        transform.Translate(moveDirection * _moveSpeed * Time.deltaTime);
+
+        //_moveTime -= Time.deltaTime;
+        /*if (_moveTime <= 0)
+            Idle();*/
+        if (moveDirection == Vector2.zero)
+        {
+            Idle();
+            return;
+        }
+
+        if (moveDirection.y == 1)
+            MoveUp();
+        else if (moveDirection.y == -1)
+            MoveDown();
+        else if (moveDirection.x == 1)
+            MoveRight();
+        else if (moveDirection.x == -1)
+            MoveLeft();
     }
 
     private void MoveRight()
@@ -61,56 +100,11 @@ public class PlayerMover : MonoBehaviour
 
     private void Idle()
     {
-        _animatorController.Play("Idle");
+        if(_directionState == DirectionState.Down)
+            _animatorController.Play("Idle Down");
+        else if(_directionState == DirectionState.Up)
+            _animatorController.Play("Idle Up");
+        else if(_directionState == DirectionState.Left || _directionState == DirectionState.Right)
+            _animatorController.Play("Idle Left");
     }
-
-    private void Awake()
-    {
-        _playerInput = new PlayerInput();
-        _animatorController = GetComponent<Animator>();
-    }
-
-    private void OnEnable()
-    {
-        _playerInput.Enable();
-    }
-
-    private void OnDisable()
-    {
-        _playerInput.Disable();
-    }
-
-    private void Update()
-    {
-        Vector2 moveDirection = _playerInput.Player.Move.ReadValue<Vector2>();
-        transform.Translate(moveDirection * _moveSpeed * Time.deltaTime);
-
-        //DirectionState currentDirection;
-        _moveTime -= Time.deltaTime;
-        if (_moveTime <= 0)
-            Idle();
-
-        if (moveDirection.y > 0)
-            MoveUp();
-        else if (moveDirection.y < 0)
-            MoveDown();
-        else if (moveDirection.x < 0)
-            MoveLeft();
-        else if (moveDirection.x > 0)
-            MoveRight();
-    }
-
-    //private bool IsDirectionStateChanged(Vector2 direction)
-    //{
-    //    if (direction == Vector2.zero)
-    //        Idle();
-    //    else if (direction.y > 0)
-    //        MoveUp();
-    //    else if (direction.y < 0)
-    //        MoveDown();
-    //    else if (direction.x < 0)
-    //        MoveLeft();
-    //    else if (direction.x > 0)
-    //        return false;
-    //}
 }
