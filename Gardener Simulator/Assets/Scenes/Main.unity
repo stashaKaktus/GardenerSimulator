@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 69997158}
-  _smoothSpeed: 0.008
+  _smoothSpeed: 0.05
 --- !u!1 &687459188
 GameObject:
   m_ObjectHideFlags: 0

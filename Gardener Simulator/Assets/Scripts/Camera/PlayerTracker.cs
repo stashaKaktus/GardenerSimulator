@@ -26,8 +26,8 @@ public class PlayerTracker : MonoBehaviour
 
     private void Update()
     {
-        Vector3 offset = _playerInput.Player.Move.ReadValue<Vector2>();
-        Vector3 targetPosition = new Vector3(_player.position.x, _player.position.y, -10) + offset;
+        //Vector3 offset = _playerInput.Player.Move.ReadValue<Vector2>();
+        Vector3 targetPosition = new Vector3(_player.position.x, _player.position.y, -10); //+ offset;
         transform.position = Vector3.Lerp(transform.position, targetPosition, _smoothSpeed);
     }
 }
