@@ -1,11 +1,13 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMover : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 3;
 
     private PlayerInput _playerInput;
+    private Rigidbody2D _rigidbody;
     private string _directionState = DOWN;
     private Animator _animatorController;
 
@@ -18,6 +20,7 @@ public class PlayerMover : MonoBehaviour
     {
         _playerInput = new PlayerInput();
         _animatorController = GetComponent<Animator>();
+        _rigidbody = GetComponent<Rigidbody2D>();
     }
 
     private void OnEnable()
@@ -30,10 +33,11 @@ public class PlayerMover : MonoBehaviour
         _playerInput.Disable();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         Vector2 moveDirection = _playerInput.Player.Move.ReadValue<Vector2>();
-        transform.Translate(moveDirection * _moveSpeed * Time.deltaTime);
+        _rigidbody.velocity = new Vector2(_moveSpeed * moveDirection.x, _moveSpeed * moveDirection.y);
+        //transform.Translate(moveDirection * _moveSpeed * Time.deltaTime);
 
         if (moveDirection == Vector2.zero)
             Idle();
