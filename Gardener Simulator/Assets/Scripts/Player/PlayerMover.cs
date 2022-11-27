@@ -40,6 +40,11 @@ public class PlayerMover : MonoBehaviour
         }
     }
 
+    public void SetMoveSpeed(float speed)
+    {
+        _moveSpeed = speed;
+    }
+
     private void Move(string direction)
     {
         if (direction == _playerController.DirectionState)

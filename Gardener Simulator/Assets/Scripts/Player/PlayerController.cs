@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     private Animator _animatorController;
 
     private PlayerMover _playerMover;
+    private PlayerAttack _playerAttack;
+    private PlayerInteraction _playerInteraction;
 
     public const string UP = "Up";
     public const string DOWN = "Down";
@@ -20,9 +22,13 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _playerInput = new PlayerInput();
-        _animatorController = GetComponent<Animator>();
+        _playerInput.Player.Attack.performed += ctx => OnAttack();
+        _playerInput.Player.Interact.performed += ctx => OnInteract();
 
+        _animatorController = GetComponent<Animator>();
         _playerMover = GetComponent<PlayerMover>();
+        _playerAttack = GetComponent<PlayerAttack>();
+        _playerInteraction = GetComponent<PlayerInteraction>();
     }
 
     private void OnEnable()
@@ -39,5 +45,17 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 moveDirection = _playerInput.Player.Move.ReadValue<Vector2>();
         _playerMover.Move(moveDirection);
+    }
+
+    public void OnAttack()
+    {
+        _playerAttack.Attack();
+        _animatorController.Play($"Attack {_directionState}");
+        Debug.Log("Attack!!!");
+    }
+
+    public void OnInteract()
+    {
+        _playerInteraction.Interact();
     }
 }
