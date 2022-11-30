@@ -290,6 +290,7 @@ GameObject:
   - component: {fileID: 1345720610}
   - component: {fileID: 1345720609}
   - component: {fileID: 1345720612}
+  - component: {fileID: 1345720614}
   - component: {fileID: 1345720613}
   m_Layer: 0
   m_Name: backgroundboy_v1_64_0
@@ -415,11 +416,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1345720608}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34890108f6bc7004fa30ca8800b80321, type: 3}
+  m_Script: {fileID: 11500000, guid: 589f577e70bfe88438ee0762a725f0de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 4
-  _character: {fileID: 1345720611}
   _targetPoints:
   - {fileID: 611408059}
   - {fileID: 1196221051}
@@ -427,6 +426,23 @@ MonoBehaviour:
   - {fileID: 932190692}
   - {fileID: 92066902}
   - {fileID: 1485884465}
+  _treshold: 1
+  _loop: 1
+  _loopTime: 2
+--- !u!114 &1345720614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345720608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c62167aa02799b48a013e46ca11b6db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveSpeed: 4
+  _character: {fileID: 1345720611}
 --- !u!1 &1485884464
 GameObject:
   m_ObjectHideFlags: 0

@@ -47,9 +47,6 @@ public class PlayerMover : MonoBehaviour
 
     private void Move(string direction)
     {
-        if (direction == _playerController.DirectionState)
-            return;
-
         _animatorController.Play($"Move {direction}");
         _playerController.DirectionState = direction;
     }
